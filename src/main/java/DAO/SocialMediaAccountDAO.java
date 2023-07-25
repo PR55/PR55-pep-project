@@ -54,16 +54,17 @@ public class SocialMediaAccountDAO {
                     Account account = new Account(rs.getInt("account_id"), rs.getString("username"), 
                     rs.getString("password"));
                     accounts.add(account);
+                    if(accounts.size() == 0)
+                        return false;
                 }
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
         }
-        
-        if(accounts.size() > 0)
+
         return true;
-        else
-        return false;
+        
+        
     }
 
     public Account AddAccount(Account account)

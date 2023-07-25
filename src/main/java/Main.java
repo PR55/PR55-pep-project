@@ -21,7 +21,7 @@ import io.javalin.Javalin;
  * affect your program in any way and you may write whatever code you like here.
  */
 public class Main {
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException, IOException{
         ConnectionUtil.resetTestDatabase();
         SocialMediaController socialMediaController = new SocialMediaController();
         Javalin app = socialMediaController.startAPI();
@@ -37,8 +37,9 @@ public class Main {
         .build();
         HttpResponse response = webClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
-        Account added = objectMapper.readValue(response.body().toString(), Account.class);
-        System.out.println(added.username);
+        //Account added = objectMapper.readValue(response.body().toString(), Account.class);
+        System.out.println(status);
+        System.out.println(response.body().toString());
         app.close();
         app.stop();
 

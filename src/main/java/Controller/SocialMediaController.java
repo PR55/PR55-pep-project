@@ -41,8 +41,8 @@ public class SocialMediaController {
                 Account addedAccount = socialMediaAccount.AddAccount(toAdd);
                 if(addedAccount != null)
                 {
-                    context.json(om.writeValueAsString(addedAccount));
                     context.status(200);
+                    context.json(om.writeValueAsString(addedAccount));
                 }
                 else
                 {
