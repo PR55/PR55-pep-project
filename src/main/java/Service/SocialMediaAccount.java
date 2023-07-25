@@ -16,4 +16,12 @@ public class SocialMediaAccount {
     {
         return socialMediaAccountDAO.GetAllAccounts();
     }
+    public boolean AccountExists(Account account)
+    {
+        return socialMediaAccountDAO.AccountExists(account);
+    }
+    public Account AddAccount(Account toAdd)
+    {
+        return socialMediaAccountDAO.AddAccount(toAdd);
+    }
 }
