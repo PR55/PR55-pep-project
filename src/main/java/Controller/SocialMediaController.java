@@ -20,7 +20,7 @@ public class SocialMediaController {
      */
     public Javalin startAPI() {
         Javalin app = Javalin.create();
-        app.get("/register", this::registerHandler);
+        app.post("/register", this::registerHandler);
 
         return app;
     }
@@ -34,9 +34,8 @@ public class SocialMediaController {
         ObjectMapper om = new ObjectMapper();
         SocialMediaAccount socialMediaAccount = new SocialMediaAccount();
         try{
-            System.out.println("\n" + "Hello" + "\n");
             Account toAdd = om.readValue(context.body(), Account.class);
-            if(!socialMediaAccount.AccountExists(toAdd))
+            if(socialMediaAccount.AccountExists(toAdd) == false)
             {
                 Account addedAccount = socialMediaAccount.AddAccount(toAdd);
                 if(addedAccount != null)

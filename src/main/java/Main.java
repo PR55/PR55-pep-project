@@ -37,6 +37,7 @@ public class Main {
         .build();
         HttpResponse response = webClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
+        if(response.body().toString() != "Not Found")
         //Account added = objectMapper.readValue(response.body().toString(), Account.class);
         System.out.println("");
         System.out.println(status);
