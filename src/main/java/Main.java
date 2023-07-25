@@ -38,8 +38,10 @@ public class Main {
         HttpResponse response = webClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
         //Account added = objectMapper.readValue(response.body().toString(), Account.class);
+        System.out.println("");
         System.out.println(status);
         System.out.println(response.body().toString());
+        System.out.println("");
         app.close();
         app.stop();
 
