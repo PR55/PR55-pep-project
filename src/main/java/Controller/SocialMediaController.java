@@ -24,6 +24,7 @@ public class SocialMediaController {
         Javalin app = Javalin.create();
         app.post("/register", this::registerHandler);
         app.post("/login", this::loginHandler);
+        app.post("/messages", this::newMessageHandler);
 
         app.delete("/messages/{messageID}", this::deleteMessageIDHandler);
 
@@ -95,6 +96,29 @@ public class SocialMediaController {
         {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void newMessageHandler(Context context)
+    {
+        ObjectMapper om = new ObjectMapper();
+        SocialMediaMessages socialMediaMessages= new SocialMediaMessages();
+        SocialMediaAccount socialMediaAccount = new SocialMediaAccount();
+        try
+        {
+            Message newMessage = om.readValue(context.body(), Message.class);
+
+            if(newMessage.message_text != "" && newMessage.message_text.length() < 255
+            && socialMediaAccount.AccountByID(newMessage.posted_by) != null)
+            {
+                
+            }
+
+        }catch(JacksonException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        
+
     }
 
     private void messageHandler(Context context)

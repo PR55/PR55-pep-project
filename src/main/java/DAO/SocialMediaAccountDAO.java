@@ -152,4 +152,29 @@ public class SocialMediaAccountDAO {
         }
         return null;
     }
+
+    public Account AccountByID(int accountID)
+    {
+        Connection connection = ConnectionUtil.getConnection();
+        Account account = null;
+
+        try {
+            //Write SQL logic here
+            String sql = "select * from account where account_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, accountID);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Account tempAccount = new Account(rs.getInt("account_id"), rs.getString("username"), 
+                rs.getString("password"));
+                account = tempAccount;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+        return account;
+    }
 }

@@ -34,5 +34,9 @@ public class SocialMediaAccount {
         return socialMediaAccountDAO.getReference(account);
     }
 
+    public Account AccountByID(int accountID)
+    {
+        return socialMediaAccountDAO.AccountByID(accountID);
+    }
     
 }
