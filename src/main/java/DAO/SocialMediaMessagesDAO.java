@@ -123,4 +123,12 @@ public class SocialMediaMessagesDAO {
         return message;
     }
 
+    public Message UpdateMessage(int messageID,Message message)
+    {
+        Connection connection = ConnectionUtil.getConnection();
+        Message newMessage = null;
+
+        return newMessage;
+    }
+
 }

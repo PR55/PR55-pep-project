@@ -33,4 +33,9 @@ public class SocialMediaMessages {
     {
         return socialMediaMessagesDAO.DeleteMessageByID(messageID);
     }
+
+    public Message UpdateMessage(int messageID, Message message)
+    {
+        return socialMediaMessagesDAO.UpdateMessage(messageID, message);
+    }
 }

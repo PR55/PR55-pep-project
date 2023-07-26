@@ -27,6 +27,8 @@ public class SocialMediaController {
 
         app.delete("/messages/{messageID}", this::deleteMessageIDHandler);
 
+        app.patch("/messages/{messageID}", this::messageUpdateHandler);
+
         app.get("/messages", this::messageHandler);
         app.get("accounts/{userID}/messages", this::userMessageHandler);
         app.get("/messages/{messageID}", this::messageIDHandler);
@@ -162,4 +164,8 @@ public class SocialMediaController {
         }
     }
 
+    private void messageUpdateHandler(Context context)
+    {
+
+    }
 }
