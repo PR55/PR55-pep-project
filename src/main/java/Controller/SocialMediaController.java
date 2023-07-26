@@ -175,7 +175,8 @@ public class SocialMediaController {
 
             if(oldMessage != null)
             {
-                String newMessage = socialMediaMessages.UpdateMessage(Integer.parseInt(context.pathParam("messageID")),"");
+                Message newMessage = socialMediaMessages.UpdateMessage(Integer.parseInt(context.pathParam("messageID")),
+                 om.readValue(context.body(), Message.class).message_text);
                 if(newMessage != null)
                 {
                     
@@ -199,4 +200,6 @@ public class SocialMediaController {
             System.out.println(e.getMessage());
         }
     }
+
+
 }

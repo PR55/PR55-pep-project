@@ -128,9 +128,7 @@ public class SocialMediaMessagesDAO {
         Connection connection = ConnectionUtil.getConnection();
         Message newMessage = null;
 
-
-
-        if(message != "" && message.length() <= 255)
+        if(message != "" && message.length() < 255)
         {
             try {
                 //Write SQL logic here
