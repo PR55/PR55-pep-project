@@ -32,42 +32,30 @@ public class SocialMediaAccountDAO {
         return accounts;
     }
 
-    public boolean AccountExists(Account acc)
+    public Account AccountExists(Account acc)
     {
         Connection connection = ConnectionUtil.getConnection();
-        List<Account> accounts = new ArrayList<>();
-        if(acc.username == "")
-        {
-            return true;
-        }
-        else
-        {
-            
+        Account account = null;
 
-        try {
+        try 
+        {
             //Write SQL logic here
-            String sql = "select * from account";
+            String sql = "select * from account where username = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, acc.getUsername());
+
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
-                Account account = new Account(rs.getInt("account_id"), rs.getString("username"), 
+                Account tempAccount = new Account(rs.getInt("account_id"), rs.getString("username"), 
                 rs.getString("password"));
-                accounts.add(account);
-            }
-            }catch(SQLException e){
-                System.out.println(e.getMessage());
-            }
-            if(accounts.contains(acc))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+                account = tempAccount;
         }
-        
-        
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+            
+        return account;
     }
 
     public Account AddAccount(Account account)
@@ -100,7 +88,6 @@ public class SocialMediaAccountDAO {
 
     public boolean Login(Account account)
     {
-        
         Connection connection = ConnectionUtil.getConnection();
         List<Account> accounts = new ArrayList<>();
 
@@ -151,6 +138,7 @@ public class SocialMediaAccountDAO {
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
+        
         return null;
     }
 

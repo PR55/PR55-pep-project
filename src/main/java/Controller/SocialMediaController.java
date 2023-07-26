@@ -47,7 +47,7 @@ public class SocialMediaController {
         SocialMediaAccount socialMediaAccount = new SocialMediaAccount();
         try{
             Account toAdd = om.readValue(context.body(), Account.class);
-            if(socialMediaAccount.AccountExists(toAdd) == false)
+            if(socialMediaAccount.AccountExists(toAdd) == null && toAdd.getUsername() != "")
             {
                 Account addedAccount = socialMediaAccount.AddAccount(toAdd);
                 if(addedAccount != null)
@@ -118,13 +118,11 @@ public class SocialMediaController {
                 else
                 {
                     context.status(400);
-                    context.json("");
                 }
             }
             else
             {
                 context.status(400);
-                context.json("");
             }
 
         }catch(JacksonException e)
@@ -173,7 +171,7 @@ public class SocialMediaController {
             context.status(200);
             Message retMess = socialMediaMessages.GetMessageByID(userID);
             if(retMess == null)
-                context.json("");
+                {}
             else
                 context.json(om.writeValueAsString(retMess));
             
@@ -192,7 +190,7 @@ public class SocialMediaController {
             context.status(200);
             Message retMess = socialMediaMessages.DeleteMessageByID(userID);
             if(retMess == null)
-                context.json("");
+                {}
             else
                 context.json(om.writeValueAsString(retMess));
             
@@ -209,28 +207,23 @@ public class SocialMediaController {
 
         try{
             Message oldMessage = socialMediaMessages.GetMessageByID(Integer.parseInt(context.pathParam("messageID")));
-            
-
             if(oldMessage != null)
             {
                 Message newMessage = socialMediaMessages.UpdateMessage(Integer.parseInt(context.pathParam("messageID")),
                  om.readValue(context.body(), Message.class).message_text);
                 if(newMessage != null)
                 {
-                    
                     context.status(200);
                     context.json(om.writeValueAsString(newMessage));
                 }   
                 else
                 {
                     context.status(400);
-                    context.json("");
                 }
             }
             else
             {
                 context.status(400);
-                context.json("");
             }
 
         }catch(JacksonException e)

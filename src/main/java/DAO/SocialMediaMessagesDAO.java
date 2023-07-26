@@ -38,7 +38,7 @@ public class SocialMediaMessagesDAO {
         Message newMessage = null;
 
         try{
-            String sql = "insert into account (posted_by, message_text, time_posted_epoch) values (?, ?, ?)";
+            String sql = "insert into message (posted_by, message_text, time_posted_epoch) values (?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 
                 preparedStatement.setInt(1, message.posted_by);
@@ -56,7 +56,6 @@ public class SocialMediaMessagesDAO {
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
-
 
         return newMessage;
     }
@@ -84,7 +83,6 @@ public class SocialMediaMessagesDAO {
         }
 
         return messages;
-
     }
 
     public Message GetMessageByID(int messageID)
@@ -177,7 +175,6 @@ public class SocialMediaMessagesDAO {
 
         }
         
-
         return newMessage;
     }
 

@@ -16,7 +16,7 @@ public class SocialMediaAccount {
     {
         return socialMediaAccountDAO.GetAllAccounts();
     }
-    public boolean AccountExists(Account account)
+    public Account AccountExists(Account account)
     {
         return socialMediaAccountDAO.AccountExists(account);
     }
