@@ -19,6 +19,11 @@ public class SocialMediaMessages {
         return socialMediaMessagesDAO.GetAllMessages();
     }
 
+    public Message NewMessage(Message message)
+    {
+        return socialMediaMessagesDAO.NewMessage(message);
+    }
+
     public List<Message> GetUserMessages(int userID)
     {
         return socialMediaMessagesDAO.GetUserMessages(userID);

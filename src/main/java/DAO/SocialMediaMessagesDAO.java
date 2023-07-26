@@ -31,6 +31,35 @@ public class SocialMediaMessagesDAO {
 
         return messages;
     }
+
+    public Message NewMessage(Message message)
+    {
+        Connection connection = ConnectionUtil.getConnection();
+        Message newMessage = null;
+
+        try{
+            String sql = "insert into account (posted_by, message_text, time_posted_epoch) values (?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                
+                preparedStatement.setInt(1, message.posted_by);
+                preparedStatement.setString(2, message.message_text);
+                preparedStatement.setLong(3, message.time_posted_epoch);
+                            
+                preparedStatement.executeUpdate();
+                ResultSet pkeyResultSet = preparedStatement.getGeneratedKeys();
+                if(pkeyResultSet.next()){
+                    int generated_message_id = (int) pkeyResultSet.getLong(1);
+                    newMessage = new Message(generated_message_id, message.posted_by, message.message_text,
+                    message.time_posted_epoch);
+                }
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+
+        return newMessage;
+    }
     
     public List<Message> GetUserMessages(int userID)
     {

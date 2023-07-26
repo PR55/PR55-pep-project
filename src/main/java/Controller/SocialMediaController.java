@@ -106,11 +106,25 @@ public class SocialMediaController {
         try
         {
             Message newMessage = om.readValue(context.body(), Message.class);
-
             if(newMessage.message_text != "" && newMessage.message_text.length() < 255
             && socialMediaAccount.AccountByID(newMessage.posted_by) != null)
             {
-                
+                Message generatedMessage = socialMediaMessages.NewMessage(newMessage);
+                if(generatedMessage != null)
+                {
+                    context.status(200);
+                    context.json(om.writeValueAsString(generatedMessage));
+                }
+                else
+                {
+                    context.status(400);
+                    context.json("");
+                }
+            }
+            else
+            {
+                context.status(400);
+                context.json("");
             }
 
         }catch(JacksonException e)

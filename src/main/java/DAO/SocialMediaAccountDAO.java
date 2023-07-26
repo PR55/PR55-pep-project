@@ -76,22 +76,23 @@ public class SocialMediaAccountDAO {
 
         if(account.password.length() > 4)
         {
-            try {
-                            String sql = "insert into account (username, password) values (?, ?)";
-                            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            try 
+            {
+                String sql = "insert into account (username, password) values (?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 
-                            preparedStatement.setString(1, account.username);
-                            preparedStatement.setString(2, account.password);
+                preparedStatement.setString(1, account.username);
+                preparedStatement.setString(2, account.password);
                             
-                            preparedStatement.executeUpdate();
-                            ResultSet pkeyResultSet = preparedStatement.getGeneratedKeys();
-                            if(pkeyResultSet.next()){
-                                int generated_account_id = (int) pkeyResultSet.getLong(1);
-                                return new Account(generated_account_id, account.username, account.password);
-                            }
-                        }catch(SQLException e){
-                            System.out.println(e.getMessage());
-                        }
+                preparedStatement.executeUpdate();
+                ResultSet pkeyResultSet = preparedStatement.getGeneratedKeys();
+                if(pkeyResultSet.next()){
+                    int generated_account_id = (int) pkeyResultSet.getLong(1);
+                    return new Account(generated_account_id, account.username, account.password);
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
         }
         return null;
         
