@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import Service.SocialMediaAccount;
+import Service.SocialMediaMessages;
 import Model.Account; 
 
 /**
@@ -22,6 +23,9 @@ public class SocialMediaController {
         Javalin app = Javalin.create();
         app.post("/register", this::registerHandler);
         app.post("/login", this::loginHandler);
+
+        app.get("/messages", this::messageHandler);
+        app.get("accounts/{userID}/messages", this::userMessageHandler);
 
         return app;
     }
@@ -87,5 +91,34 @@ public class SocialMediaController {
         }
     }
 
+    private void messageHandler(Context context)
+    {
+        ObjectMapper om = new ObjectMapper();
+        SocialMediaMessages socialMediaMessages= new SocialMediaMessages();
+        try{
+            System.out.println("\n" + context.body() + "\n");
+            context.status(200);
+            context.json(om.writeValueAsString(socialMediaMessages.GetAllMessages()));
+        } catch(JacksonException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        
+    }
 
+    private void userMessageHandler(Context context)
+    {
+        ObjectMapper om = new ObjectMapper();
+        SocialMediaMessages socialMediaMessages= new SocialMediaMessages();
+        try{
+            System.out.println("\n" + context.body() + "\n");
+            int userID = Integer.parseInt(context.pathParam("userID"));
+            context.status(200);
+            context.json(om.writeValueAsString(socialMediaMessages.GetUserMessages(userID)));
+        } catch(JacksonException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        
+    }
 }
