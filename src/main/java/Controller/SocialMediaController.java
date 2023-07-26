@@ -6,7 +6,8 @@ import io.javalin.Javalin;
 import io.javalin.http.Context;
 import Service.SocialMediaAccount;
 import Service.SocialMediaMessages;
-import Model.Account; 
+import Model.Account;
+import Model.Message; 
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
@@ -26,6 +27,7 @@ public class SocialMediaController {
 
         app.get("/messages", this::messageHandler);
         app.get("accounts/{userID}/messages", this::userMessageHandler);
+        app.get("/messages/{messageID}", this::messageIDHandler);
 
         return app;
     }
@@ -96,7 +98,6 @@ public class SocialMediaController {
         ObjectMapper om = new ObjectMapper();
         SocialMediaMessages socialMediaMessages= new SocialMediaMessages();
         try{
-            System.out.println("\n" + context.body() + "\n");
             context.status(200);
             context.json(om.writeValueAsString(socialMediaMessages.GetAllMessages()));
         } catch(JacksonException e)
@@ -111,7 +112,6 @@ public class SocialMediaController {
         ObjectMapper om = new ObjectMapper();
         SocialMediaMessages socialMediaMessages= new SocialMediaMessages();
         try{
-            System.out.println("\n" + context.body() + "\n");
             int userID = Integer.parseInt(context.pathParam("userID"));
             context.status(200);
             context.json(om.writeValueAsString(socialMediaMessages.GetUserMessages(userID)));
@@ -120,5 +120,24 @@ public class SocialMediaController {
             System.out.println(e.getMessage());
         }
         
+    }
+
+    private void messageIDHandler(Context context)
+    {
+        ObjectMapper om = new ObjectMapper();
+        SocialMediaMessages socialMediaMessages= new SocialMediaMessages();
+        try{
+            int userID = Integer.parseInt(context.pathParam("messageID"));
+            context.status(200);
+            Message retMess = socialMediaMessages.GetMessageByID(userID);
+            if(retMess == null)
+                context.json(om.writeValueAsString(""));
+            else
+                context.json(om.writeValueAsString(retMess));
+            
+        } catch(JacksonException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }

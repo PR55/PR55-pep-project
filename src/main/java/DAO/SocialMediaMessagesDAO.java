@@ -57,4 +57,29 @@ public class SocialMediaMessagesDAO {
         return messages;
 
     }
+
+    public Message GetMessageByID(int messageID)
+    {
+        Connection connection = ConnectionUtil.getConnection();
+        Message message = null;
+
+        try {
+            //Write SQL logic here
+            String sql = "select * from message where message_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, messageID);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Message tempMessage = new Message(rs.getInt("message_id"), rs.getInt("posted_by"),
+                 rs.getString("message_text"), rs.getLong("time_posted_epoch"));
+                message = tempMessage;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+        return message;
+    }
 }

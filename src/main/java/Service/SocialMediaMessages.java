@@ -23,4 +23,9 @@ public class SocialMediaMessages {
     {
         return socialMediaMessagesDAO.GetUserMessages(userID);
     }
+
+    public Message GetMessageByID(int messageID)
+    {
+        return socialMediaMessagesDAO.GetMessageByID(messageID);
+    }
 }
