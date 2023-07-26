@@ -25,6 +25,8 @@ public class SocialMediaController {
         app.post("/register", this::registerHandler);
         app.post("/login", this::loginHandler);
 
+        app.delete("/messages/{messageID}", this::deleteMessageIDHandler);
+
         app.get("/messages", this::messageHandler);
         app.get("accounts/{userID}/messages", this::userMessageHandler);
         app.get("/messages/{messageID}", this::messageIDHandler);
@@ -131,7 +133,7 @@ public class SocialMediaController {
             context.status(200);
             Message retMess = socialMediaMessages.GetMessageByID(userID);
             if(retMess == null)
-                context.json(om.writeValueAsString(""));
+                context.json("");
             else
                 context.json(om.writeValueAsString(retMess));
             
@@ -140,4 +142,24 @@ public class SocialMediaController {
             System.out.println(e.getMessage());
         }
     }
+
+    private void deleteMessageIDHandler(Context context)
+    {
+        ObjectMapper om = new ObjectMapper();
+        SocialMediaMessages socialMediaMessages= new SocialMediaMessages();
+        try{
+            int userID = Integer.parseInt(context.pathParam("messageID"));
+            context.status(200);
+            Message retMess = socialMediaMessages.DeleteMessageByID(userID);
+            if(retMess == null)
+                context.json("");
+            else
+                context.json(om.writeValueAsString(retMess));
+            
+        } catch(JacksonException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
