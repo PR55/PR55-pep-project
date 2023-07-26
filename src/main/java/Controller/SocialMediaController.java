@@ -166,6 +166,37 @@ public class SocialMediaController {
 
     private void messageUpdateHandler(Context context)
     {
+        ObjectMapper om = new ObjectMapper();
+        SocialMediaMessages socialMediaMessages= new SocialMediaMessages();
 
+        try{
+            Message oldMessage = socialMediaMessages.GetMessageByID(Integer.parseInt(context.pathParam("messageID")));
+            
+
+            if(oldMessage != null)
+            {
+                String newMessage = socialMediaMessages.UpdateMessage(Integer.parseInt(context.pathParam("messageID")),"");
+                if(newMessage != null)
+                {
+                    
+                    context.status(200);
+                    context.json(om.writeValueAsString(newMessage));
+                }   
+                else
+                {
+                    context.status(400);
+                    context.json("");
+                }
+            }
+            else
+            {
+                context.status(400);
+                context.json("");
+            }
+
+        }catch(JacksonException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -123,10 +123,33 @@ public class SocialMediaMessagesDAO {
         return message;
     }
 
-    public Message UpdateMessage(int messageID,Message message)
+    public Message UpdateMessage(int messageID,String message)
     {
         Connection connection = ConnectionUtil.getConnection();
         Message newMessage = null;
+
+
+
+        if(message != "" && message.length() <= 255)
+        {
+            try {
+                //Write SQL logic here
+                String sql = "update message set message_text = ? where message_id = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    
+                preparedStatement.setString(1, message);
+                preparedStatement.setInt(2, messageID);
+    
+                preparedStatement.executeUpdate();
+    
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+
+            newMessage = this.GetMessageByID(messageID);
+
+        }
+        
 
         return newMessage;
     }
