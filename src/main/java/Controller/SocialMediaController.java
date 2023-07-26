@@ -21,6 +21,7 @@ public class SocialMediaController {
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.post("/register", this::registerHandler);
+        app.post("/login", this::loginHandler);
 
         return app;
     }
@@ -61,6 +62,29 @@ public class SocialMediaController {
         }
         
         
+    }
+
+    private void loginHandler(Context context)
+    {
+        ObjectMapper om = new ObjectMapper();
+        SocialMediaAccount socialMediaAccount = new SocialMediaAccount();
+        try{
+            Account loginAccount = om.readValue(context.body(), Account.class);
+            if(socialMediaAccount.loginTest(loginAccount))
+            {
+                context.status(200);
+                Account loginReference = socialMediaAccount.getReference(loginAccount);
+                context.json(om.writeValueAsString(loginReference));
+            }
+            else
+            {
+                context.status(401);
+            }
+        }
+        catch(JacksonException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
 

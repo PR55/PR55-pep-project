@@ -29,10 +29,10 @@ public class Main {
         ObjectMapper objectMapper = new ObjectMapper();
         app.start(8080);
         HttpRequest postRequest = HttpRequest.newBuilder()
-        .uri(URI.create("http://localhost:8080/register"))
+        .uri(URI.create("http://localhost:8080/login"))
         .POST(HttpRequest.BodyPublishers.ofString("{" +
-                "\"username\": \"user\", " +
-                "\"password\": \"password\" }"))
+            "\"username\": \"testuser1\", " +
+            "\"password\": \"password\" }"))
         .header("Content-Type", "application/json")
         .build();
         HttpResponse response = webClient.send(postRequest, HttpResponse.BodyHandlers.ofString());

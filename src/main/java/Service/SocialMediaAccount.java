@@ -24,4 +24,14 @@ public class SocialMediaAccount {
     {
         return socialMediaAccountDAO.AddAccount(toAdd);
     }
+    public boolean loginTest(Account account)
+    {
+        return socialMediaAccountDAO.Login(account);
+    }
+
+    public Account getReference(Account account)
+    {
+        return socialMediaAccountDAO.getReference(account);
+    }
+
 }
